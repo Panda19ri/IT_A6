@@ -28,6 +28,3 @@ Build a centralized note-taking app that is simple yet powerful for organizing i
 - **HTML5** – Structure  
 - **CSS3** – Styling & Dark/Light Theme  
 - **JavaScript (ES6)** – Functionality & LocalStorage  
-
-
-## 📂 Project Structure
