@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteMaster Pro - Advanced Note Taking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="dark">
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">📝</span>
+                NOTE TAKING APP
+            </div>
+            <div class="header-controls">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search notes, tags, content..." id="searchInput">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="control-group">
+                    <button class="icon-btn" id="themeToggle" title="Toggle Theme">🌙</button>
+                    <button class="icon-btn" id="exportBtn" title="Export Notes">📤</button>
+                    <button class="icon-btn" id="importBtn" title="Import Notes">📥</button>
+                    <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalNotes">0</div>
+                <div class="stat-label">Total Notes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalWords">0</div>
+                <div class="stat-label">Total Words</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todaysNotes">0</div>
+                <div class="stat-label">Today's Notes</div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <aside class="sidebar">
+                <button class="add-note-btn" id="addNoteBtn">
+                    ➕ Create New Note
+                </button>
+                
+                <div class="section-title">
+                    📂 Categories
+                </div>
+                <div class="filter-chips" id="categoryFilters">
+                    <div class="chip active" data-category="all">All Notes</div>
+                </div>
+
+                <div class="section-title">
+                    📊 Sort By
+                </div>
+                <div class="sort-controls">
+                    <button class="sort-btn active" data-sort="updated">Recent</button>
+                    <button class="sort-btn" data-sort="created">Newest</button>
+                    <button class="sort-btn" data-sort="title">A-Z</button>
+                </div>
+
+                <div class="section-title">
+                    📋 Your Notes
+                </div>
+                <div class="notes-container" id="notesContainer">
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <div class="empty-text">No notes yet</div>
+                        <div class="empty-subtext">Create your first note to get started!</div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="editor-section">
+                <div class="editor-header">
+                    <input type="text" class="note-title-input" placeholder="Enter your note title..." id="noteTitleInput">
+                    <div class="editor-toolbar">
+                        <button class="toolbar-btn" id="saveBtn">💾 Save</button>
+                        <button class="toolbar-btn" id="duplicateBtn">📋 Duplicate</button>
+                        <button class="toolbar-btn danger" id="deleteBtn">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <div class="editor-meta">
+                    <input type="text" class="meta-input" placeholder="Tags (comma separated)" id="tagsInput">
+                    <select class="meta-input" id="prioritySelect">
+                        <option value="low">🟢 Low Priority</option>
+                        <option value="medium">🟡 Medium Priority</option>
+                        <option value="high">🔴 High Priority</option>
+                    </select>
+                </div>
+
+                <div class="editor-formatting">
+                    <button class="format-btn" data-format="bold" title="Bold">B</button>
+                    <button class="format-btn" data-format="italic" title="Italic">I</button>
+                    <button class="format-btn" data-format="underline" title="Underline">U</button>
+                    <button class="format-btn" data-format="code" title="Code">{ }</button>
+                    <button class="format-btn" data-format="list" title="List">•</button>
+                    <button class="format-btn" data-format="quote" title="Quote">"</button>
+                </div>
+
+                <textarea class="note-editor" placeholder="Start writing your masterpiece..." id="noteEditor"></textarea>
+                
+                <div class="editor-footer">
+                    <div class="word-count" id="wordCount">0 words, 0 characters</div>
+                    <div class="save-status" id="saveStatus">
+                        <span>✅</span> Auto-saved
+                    </div>
+                </div>
+
+                <div class="export-options">
+                    <button class="export-btn" id="exportTxtBtn">📄 Export as TXT</button>
+                    <button class="export-btn" id="exportMarkdownBtn">📝 Export as Markdown</button>
+                    <button class="export-btn" id="printBtn">🖨️ Print Note</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-toolbar">
+        <button class="float-btn" id="floatAddBtn" title="Quick Add Note">➕</button>
+        <button class="float-btn" id="backupBtn" title="Backup Notes">☁️</button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">⚙️ Settings</h2>
+                <button class="close-btn" id="closeSettings">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>Auto-save interval:</label>
+                    <select id="autoSaveInterval">
+                        <option value="500">0.5 seconds</option>
+                        <option value="1000" selected>1 second</option>
+                        <option value="2000">2 seconds</option>
+                        <option value="5000">5 seconds</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>Font size:</label>
+                    <select id="fontSize">
+                        <option value="14px">Small</option>
+                        <option value="16px" selected>Medium</option>
+                        <option value="18px">Large</option>
+                        <option value="20px">Extra Large</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="wordWrap" checked> Word wrap
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="showWordCount" checked> Show word count
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📥 Import Notes</h2>
+                <button class="close-btn" id="closeImport">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Upload a JSON file containing your notes:</p>
+                <input type="file" id="fileInput" accept=".json,.txt,.md" style="margin: 20px 0;">
+                <button class="toolbar-btn" id="uploadBtn">Upload File</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
